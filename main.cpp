@@ -10,6 +10,183 @@
 using namespace std;
 using std::cout;
 
+void capitalize(string &data);
+void terminate(string data, std::ofstream& outfile);
+int openFile(std::ofstream& outfile);
+string receiveName(string data);
+bool validateName(string name);
+int nameLoop(string data, bool loop, std::ofstream& outfile);
+string receiveDOB(string date);
+bool validateDOB(string date);
+string receivePhoneNumber(string phone);
+bool validatePhoneNumber(string phone);
+string receivePostcode(string postcode);
+bool validatePostcode(string postcode);
+
+int main(int argc, char **argv){
+    /* Declare the variables. */
+    string data;
+    bool loop = true;
+
+    /* Open a file in write mode. Creates and writes to the 'output.txt' file. */
+    ofstream outfile;
+    openFile(outfile);
+
+    while(1){
+
+        /* Looping Name Section */
+        while(loop == true){
+            /* Get the name from the user. */
+            data = receiveName(data);
+
+            /* Read file content and exit the program if 'q' is entered. */
+            if(data == "q"){
+                terminate(data, outfile);
+                return 0;
+            }
+
+            /* Ensure the name input follows traditional naming conventions. */
+            bool name = validateName(data);
+
+            if(name == true){
+                /* Write inputted data into the file. */
+                outfile << "Name: " << data << endl;
+                /* Exit the current loop. */
+                break;
+            }
+            else{
+                /* Display a message to indicate that the input entered was invalid. */   
+                cout << "Name was considered to be invalid." << endl;
+                /* Loop the name prompt. */
+                loop = true;
+            }
+        }
+
+        /* Looping DOB Section. */
+        while(loop == true){
+            /* Get the DOB from the user. */
+            data = receiveDOB(data);
+
+            /* Read file content and exit the program if 'q' is entered. */
+            if(data == "q"){
+                /* When exiting... ensure the other information is unavailable. */
+                outfile << "Date of Birth: (not available)" << endl;
+                outfile << "Phone Number: (not available)" << endl;
+                outfile << "Postcode: (not available)" << endl;
+                terminate(data, outfile);
+                return 0;
+            }
+
+            /* Ensure the name input follows traditional naming conventions. */
+            bool dob = validateDOB(data);
+
+            if(dob == true){
+                /* Write inputted data into the file. */
+                outfile << "Date of Birth: " << data << endl;
+                /* Exit the current loop. */
+                break;
+            }
+            else if(data == "" && dob == false){
+                /* Write into the file that the DOB information is unavailable. */
+                outfile << "Date of Birth: (not available)" << endl;
+                /* Assure the user that the DOB information has been skipped. */
+                cout << "Date of birth information has been skipped..." << endl;
+                /* Exit the current loop. */
+                break;
+            }
+            else{
+                /* Indicate to the user that their input was invalid. */
+                cout << "Date of birth was considered to be invalid." << endl;
+                /* Loop the DOB prompt. */
+                loop = true;
+            }
+        }
+
+        /* Looping Phone Number Section. */
+        while(loop == true){
+            /* Receive the phone number from the user. */
+            data = receivePhoneNumber(data);
+
+            /* Read file content and exit the program if 'q' is entered. */
+            if(data == "q"){
+                /* When exiting... ensure the other information is unavailable. */
+                outfile << "Phone Number: (not available)" << endl;
+                outfile << "Postcode: (not available)" << endl;
+                terminate(data, outfile);
+                return 0;
+            }
+
+            /* Ensure the name input follows traditional naming conventions. */
+            bool phone = validatePhoneNumber(data);
+
+            if(phone == true){
+                /* Write inputted data into the file. */
+                outfile << "Phone Number: " << data << endl;
+                /* Exit the current loop. */
+                break;
+            }
+            else if(data == "" && phone == false){
+                /* Write unavailable information for the phone number section into the file. */
+                outfile << "Phone Number: (not available)" << endl;
+                /* Assure the user that the phone number information has been skipped. */
+                cout << "Phone number information has been skipped..." << endl;
+                /* Exit the current loop. */
+                break;
+            }
+            else{
+                /* Indicate to the user that the phone number entered is invalid. */
+                cout << "Phone number was considered to be invalid." <<  endl;
+                /* Loop the phone number prompt back to the user. */
+                loop = true;
+            }
+        }
+
+        /* Looping Postcode Section. */
+        while(loop == true){
+            /* Receive the phone number from the user. */
+            data = receivePostcode(data);
+
+            /* Read file content and exit the program if 'q' is entered. */
+            if(data == "q"){
+                /* When exiting... ensure the other information is unavailable. */
+                outfile << "Postcode: (not available)" << endl;
+                terminate(data, outfile);
+                return 0;
+            }
+
+            /* Ensure the name input follows traditional naming conventions. */
+            bool postcode = validatePostcode(data);
+
+            if(postcode == true){
+                /* Write inputted data into the file. */
+                outfile << "Postcode: " << data << endl;
+                /* Exit the nested loop. */
+                break;
+            }
+            else if(data == "" && postcode == false){
+                /* Write into the file that the postcode information is unavailable. */
+                outfile << "Postcode: (not available)" << endl;
+                /* Assure the user that the postcode information has been skipped. */
+                cout << "Postcode information has been skipped..." << endl;
+                /* Exit the current loop. */
+                break;
+            }
+            else{
+                /* Indicate to the user that the postcode entered is invalid. */
+                cout << "UK Postcode was considered to be invalid." <<  endl;
+                /* Loop the phone number prompt back to the user. */
+                loop = true;
+            }
+        }
+        /* Write in a space/empty line to organize and distinguish the 
+        information of different people. */
+        outfile << "\n";
+        /* Continue to loop through the prime while loop. */
+        continue;
+    }
+    return 0;
+}
+
 /* Create a function that converts the first letter of every name. */
 void capitalize(string &data)
 {
@@ -29,241 +206,9 @@ void capitalize(string &data)
     }
 }
 
-int main(int argc, char **argv)
+/* Add a function to read the content of the file when program terminates. */
+void terminate(string data, std::ofstream& outfile)
 {
-    /* Declare the variables. */
-    string data;
-    int mcguffin = 0, mcguffin2 = 0, mcguffin3 = 0, mcguffin4 = 0;
-
-    /* Open a file in write mode. Creates and writes to the 'output.txt' file. */
-    ofstream outfile;
-    outfile.open("output.txt");
-    /* Set in a precaution if 'output.txt' fails to open. */
-    if(outfile.fail())
-    {
-        /* Display a message if 'output.txt' fails to open. */
-        cout << "Couldn't open the file!" << endl;
-        return 0;
-    }
-
-    cout << "\nINSTRUCTIONS:" << endl;
-    cout << "(1) Enter q to exit." << endl;
-    cout << "(2) Enter a blank space to skip (does not apply to NAME prompts)." << endl;
-
-    putchar('\n');
-    /* Indicate to the user that they are now entering information that will transfer into 'output.txt'. */
-    cout << "Writing to the file..." << endl;
-
-    while(1)
-    {
-        /* Set loop to a true condition. */
-        while(mcguffin == 0)
-        {
-            putchar('\n');
-            /* Allow the user to enter the name. */
-            cout << "Enter the name: ";
-            /* Receive name from the user. */
-            getline(cin, data);
-            
-            /* Utilize the capitalize function. */
-            capitalize(data);
-
-            /* Declare the regular expression that will be used to validate the name. */
-            regex regname("^[A-Z]([a-z]{0,32}(([',.-]{1}([A-Z]{1}))?([a-z',.-]+(\\s[A-Z]{1})*))*)$");
-
-            /* Determine if the user input matches the regular expression for the name. */
-            if(regex_match(data, regname))
-            {
-                /* Write inputted data into the file. */
-                outfile << "Name: " << data << endl;
-                /* Exit the nested loop. */
-                break;
-            }
-            /* Determine if 'q' has been entered. */
-            else if(data == "q")
-            {
-                /* Exit the nested loop. */
-                break;
-            }
-            else
-            {
-                /* Display a message to indicate that the input entered was invalid. */   
-                cout << "Name was considered to be invalid." << endl;
-                /* Loop the name prompt. */
-                mcguffin = 0;
-            }
-        }
-        if(data == "q")
-        {
-            /* Exit the prime loop. */
-            break;
-        }
-        else
-        {
-            /* Declare a nested loop through a true condition. */
-            while(mcguffin2 == 0)
-            {
-                /* Allow the user to enter the date of birth of the name previously entered. */
-                cout << "Enter the date of birth (yyyy/mm/dd): ";
-                /* Receive DOB from the user. */
-                getline(cin, data);
-
-                /* Declare the regular expression that is used to validate the DOB. */
-
-                regex regdate("((18|19|20)[0-9]{2}[\\/.](0[13578]|1[02])[\\/.](0[1-9]|[12][0-9]|3[01]))|(18|19|20)[0-9]{2}[\\/.](0[469]|11)[\\/.](0[1-9]|[12][0-9]|30)|(18|19|20)[0-9]{2}[\\/.](02)[\\/.](0[1-9]|1[0-9]|2[0-8])|(((18|19|20)(04|08|[2468][048]|[13579][26]))|2000)[\\/.](02)[\\/.]29");
-
-                /* Determine if the user input is validated by the regular expression. */
-                if(regex_match(data, regdate))
-                {
-                    /* Write inputted data into the file. */
-                    outfile << "Date of Birth: " << data << endl;
-                    /* Exit the nested loop. */
-                    break;
-                }
-                else if(data == "q")
-                {
-                    /* When exiting... ensure the other information is unavailable. */
-                    outfile << "Date of Birth: (not available)" << endl;
-                    outfile << "Phone Number: (not available)" << endl;
-                    outfile << "Postcode: (not available)" << endl;
-                    /* Exit the nested loop if 'q' was entered. */
-                    break;
-                }
-                /* If the user enters nothing, then there will be unavailable data in file. */
-                else if(data == "")
-                {
-                    /* Write into the file that the DOB information is unavailable. */
-                    outfile << "Date of Birth: (not available)" << endl;
-                    /* Assure the user that the DOB information has been skipped. */
-                    cout << "Date of birth information has been skipped..." << endl;
-                    /* Exit the nested loop. */
-                    break;
-                }
-                else
-                {
-                    /* Indicate to the user that their input was invalid. */
-                    cout << "Date of birth was considered to be invalid." << endl;
-                    /* Loop the DOB prompt to the user. */
-                    mcguffin2 = 0; 
-                }
-            }
-            if(data == "q")
-            {
-                /* Exit the prime loop if 'q' has been entered. */
-                break;
-            }
-            else
-            {
-                /* Declare a nested loop through a true condition. */
-                while(mcguffin3 == 0)
-                {
-                    /* Persuade the user to enter the phone number of the specific name
-                    previously entered. */
-                    cout << "Enter the phone number: ";
-                    /* Receive the phone number from user. */
-                    getline(cin, data);
-
-                    /* Declare the regular expression that will be used to validate the phone number. */
-                    regex regphone("^[0](([0-9]){10}|([0-9]{4}\\s([0-9]{6}))$)");
-
-                    /* Determine if the input is valid through the regular expression of the phone number. */
-                    if(regex_match(data, regphone))
-                    {
-                        /* Write inputted data into the file. */
-                        outfile << "Phone Number: " << data << endl;
-                        /* Exit the nested loop. */
-                        break;
-                    }
-                    else if(data == "q")
-                    {
-                        /* When exiting... ensure the other information is unavailable. */
-                        outfile << "Phone Number: (not available)" << endl;
-                        outfile << "Postcode: (not available)" << endl;
-                        /* If 'q' is entered, exit the nested loop. */
-                        break;
-                    }
-                    else if(data == "")
-                    {
-                        /* Write unavailable information for the phone number section into the file. */
-                        outfile << "Phone Number: (not available)" << endl;
-                        /* Assure the user that the phone number information has been skipped. */
-                        cout << "Phone number information has been skipped..." << endl;
-                        /* Exit the nested loop. */
-                        break;
-                    }
-                    else
-                    {
-                        /* Indicate to the user that the phone number entered is invalid. */
-                        cout << "Phone number was considered to be invalid." <<  endl;
-                        /* Loop the phone number prompt back to the user. */
-                        mcguffin3 = 0;
-                    }
-                }
-                if(data == "q")
-                {
-                    /* Make sure to exit the prime loop if 'q' was entered. */
-                    break;
-                }
-                else
-                {
-                    /* Declare another nested loop through a true condition. */
-                    while(mcguffin4 == 0)
-                    {
-                        /* Allow the user to enter the postcode information of the specific name
-                        previously entered. */
-                        cout << "Enter the postcode: ";
-                        /* Receive the postcode information from the user. */
-                        getline(cin, data);
-
-                        regex regpost("^[A-Z]{1,2}([0-9]{1,2})(\\s[0-9]{1})([A-Z]{2})$");
-                        if(regex_match(data, regpost))
-                        {
-                            /* Write inputted data into the file. */
-                            outfile << "Postcode: " << data << endl;
-                            /* Exit the nested loop. */
-                            break;
-                        }
-                        else if(data == "q")
-                        {
-                            /* When exiting... ensure the other information is unavailable. */
-                            outfile << "Postcode: (not available)" << endl;
-                            /* Exit the nested loop if 'q' was entered. */
-                            break;
-                        }
-                        else if(data == "")
-                        {
-                            /* Write into the file that the postcode information is unavailable. */
-                            outfile << "Postcode: (not available)" << endl;
-                            /* Assure the user that the postcode information has been skipped. */
-                            cout << "Postcode information has been skipped..." << endl;
-                            /* Exit the nested loop. */
-                            break;
-                        }
-                        else
-                        {
-                            /* Display a message to let user know that the postcode entered is invalid. */
-                            cout << "Postcode was considered to be invalid." << endl;
-                            /* Loop the postcode prompt back to the user. */
-                            mcguffin4 = 0;
-                        }
-                    }
-                    if(data == "q")
-                    {
-                        /* Make sure to exit the prime loop if user enters 'q'. */
-                        break;
-                    }
-                    else
-                    {
-                        /* Write in a space/empty line to organize and distinguish the 
-                        information of different people. */
-                        outfile << "\n";
-                        /* Continue to loop through the prime while loop. */
-                        continue;
-                    }
-                }
-            }
-        }
-    }
     /* Close the opened file. */
     outfile.close();
 
@@ -287,6 +232,141 @@ int main(int argc, char **argv)
     /* Close the opened file. */
     /* It is consiered good practice, and it can clean up unnecessary memory space. */
     infile.close();
+}
 
-    return 0;
+int openFile(std::ofstream& outfile){
+    
+    outfile.open("output.txt");
+    /* Set in a precaution if 'output.txt' fails to open. */
+    if(outfile.fail())
+    {
+        /* Display a message if 'output.txt' fails to open. */
+        cout << "Couldn't open the file!" << endl;
+        return 0;
+    }
+
+    cout << "\nINSTRUCTIONS:" << endl;
+    cout << "(1) Enter q to exit." << endl;
+    cout << "(2) Enter a blank space to skip (does not apply to NAME prompts)." << endl;
+
+    putchar('\n');
+    /* Indicate to the user that they are now entering information that will transfer into 'output.txt'. */
+    cout << "Writing to the file..." << endl;
+
+    return 1;
+}
+
+/* Construct a function that receives a validated name from user. */
+string receiveName(string data){
+    putchar('\n');
+    /* Allow the user to enter the name. */
+    cout << "Enter the name: ";
+    /* Receive name from the user. */
+    getline(cin, data);
+            
+    /* Utilize the capitalize function. */
+    capitalize(data);
+
+    /* Return the name that was entered by the user. */
+    return data;
+}
+
+/* Create a function that utilizes regex to validate the Name entered by the user. */
+bool validateName(string name){   
+    /* Declare the regular expression that will be used to validate the name. */
+    regex regname("^[A-Z]([a-z]{2,32}(([',.-]{1}([A-Z]{1}))?([a-z',.-]+(\\s[A-Z]{1})*))*)$");
+
+    /* Determine if the user input matches the regular expression for the name. */
+    if(regex_match(name, regname)){   
+        /* Name is true if it passes regex conditions. */
+        return true;
+    }
+    else{
+        /* Name is flase if it fails to pass regex conditions. */ 
+        return false; 
+    }
+}
+
+/* Create a function that asks the user to enter DOB. */
+string receiveDOB(string date){
+    putchar('\n');
+    /* Allow the user to enter the date of birth of the name previously entered. */
+    cout << "Enter the date of birth (yyyy/mm/dd): ";
+                
+    /* Receive DOB from the user. */
+    getline(cin, date);
+
+    return date;
+}
+
+/* Create a function that utilizes regex to validate DOB. */
+bool validateDOB(string date){
+    /* Declare the regular expression that is used to validate the DOB. */
+    regex regdate("((18|19|20)[0-9]{2}[\\/.](0[13578]|1[02])[\\/.](0[1-9]|[12][0-9]|3[01]))|(18|19|20)[0-9]{2}[\\/.](0[469]|11)[\\/.](0[1-9]|[12][0-9]|30)|(18|19|20)[0-9]{2}[\\/.](02)[\\/.](0[1-9]|1[0-9]|2[0-8])|(((18|19|20)(04|08|[2468][048]|[13579][26]))|2000)[\\/.](02)[\\/.]29");
+
+    /* Determine if the user input is validated by the regular expression. */
+    if(regex_match(date, regdate)){
+        /* DOB passes regex conditions. */
+        return true;
+    }
+    else{
+        /* DOB fails regex conditions. */
+        return false;
+    }
+}
+
+/* Construct a function that receives a validated phone number from user. */
+string receivePhoneNumber(string phone){
+    putchar('\n');
+    /* Allow the user to enter the phone number. */
+    cout << "Enter the phone number: ";
+    /* Receive phone number from the user. */
+    getline(cin, phone);
+            
+    /* Return the phone number that was entered by the user. */
+    return phone;
+}
+
+/* Create a function that utilizes regex to validate phone numbers. */
+bool validatePhoneNumber(string phone){
+    /* Declare the regular expression that will be used to validate the phone number. */
+    regex regphone("^[0](([0-9]){10}|([0-9]{4}\\s([0-9]{6}))$)");
+
+    /* Determine if the user input is validated by the regular expression. */
+    if(regex_match(phone, regphone)){
+        /* Phone number passes regex conditions. */
+        return true;
+    }
+    else{
+        /* Phone number fails regex conditions. */
+        return false;
+    }
+}
+
+/* Construct a function that receives a validated UK postcode from user. */
+string receivePostcode(string postcode){
+    putchar('\n');
+    /* Allow the user to enter the postcode. */
+    cout << "Enter the postcode: ";
+    /* Receive postcode from the user. */
+    getline(cin, postcode);
+            
+    /* Return the postcode that was entered by the user. */
+    return postcode;
+}
+
+/* Create a function that utilizes regex to validate UK postcodes. */
+bool validatePostcode(string postcode){
+    /* Declare the regular expression that will be used to validate the UK postcode. */
+    regex regpost("^[A-Z]{1,2}([0-9]{1,2})(\\s[0-9]{1})([A-Z]{2})$");
+
+    /* Determine if the user input is validated by the regular expression. */
+    if(regex_match(postcode, regpost)){
+        /* UK postcode passes regex conditions. */
+        return true;
+    }
+    else{
+        /* UK postcode number fails regex conditions. */
+        return false;
+    }
 }
