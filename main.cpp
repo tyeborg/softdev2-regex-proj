@@ -4,7 +4,6 @@
 #include <regex>
 #include <string>
 #include <cstdio>
-#include <ctime>
 
 using namespace std;
 using std::cout;
