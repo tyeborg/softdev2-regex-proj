@@ -4,8 +4,8 @@ The main objective of this project is to write a program that accepts four piece
 
 <img width="1236" alt="Screen Shot 2022-08-26 at 2 09 42 AM" src="https://user-images.githubusercontent.com/96035297/186795391-9024e589-7aea-4ba9-bb0d-4d8980ba3e68.png">
 
-## Installation
-Clone this repository by `git clone`
+## Installation & Execution 
+Clone this repository by `git clone https://github.com/tyeborg/softdev2-regex-project.git`
 
 Much of the data read by this program is not validated. That is, it is possible to enter data that is not in the correct format. You must extend the program so that only correctly entered data can be accepted into the store of employees.
 
