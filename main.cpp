@@ -1,44 +1,48 @@
-// compile: cl validate.cpp
-// compile with: /EHa
 #include <fstream>
 #include <iostream>
 #include <cctype>
 #include <regex>
 #include <string>
 #include <cstdio>
+#include <ctime>
 
 using namespace std;
 using std::cout;
 
+/* Functions to be utilized in main(). */
 void capitalize(string &data);
+void capitalizePostcode(string &data);
 bool isNum(string &str);
 bool isSpecialChar(string &str);
 string sIsBack(string &str);
 void terminate(string data, std::ofstream& outfile);
-int openFile(std::ofstream& outfile);
-
+void startProgram();
 string receiveName(string name);
 bool validateName(string name);
-
 string receiveDOB(string date, string user);
 bool validateDOB(string date);
-
-string receivePhoneNumber(string phone);
+string receivePhoneNumber(string phone, string user);
 bool validatePhoneNumber(string phone);
-
-string receivePostcode(string postcode);
+string receivePostcode(string postcode, string user);
 bool validatePostcode(string postcode);
-
 void nameErrors(string& name);
 
 int main(int argc, char **argv){
     /* Declare the variables. */
-    string data, properNoun;
+    string data, possessiveProperNoun;
     bool loop = true;
 
     /* Open a file in write mode. Creates and writes to the 'output.txt' file. */
     ofstream outfile;
-    openFile(outfile);
+    outfile.open("output.txt");
+    /* Set in a precaution if 'output.txt' fails to open. */
+    if(outfile.fail()) {
+        /* Display a message if 'output.txt' fails to open. */
+        cout << "Couldn't open the file!" << endl;
+        return 0;
+    }
+    /* Provide the user with instructions by invoking the startProgram() function. */
+    startProgram();
 
     while(1) {
 
@@ -52,19 +56,17 @@ int main(int argc, char **argv){
                 terminate(data, outfile);
                 return 0;
             }
-
             /* Ensure the name input follows traditional naming conventions. */
             bool name = validateName(data);
 
             if(name == true) {
                 /* Write inputted data into the file. */
                 outfile << "Name: " << data << endl;
-
                 /* Notify the user that their input has been accepted */
                 cout << "[+] '" << data << "' has been accepted." << endl;
 
                 /* Store the validated name in the applicant variable. */
-                properNoun = sIsBack(data);
+                possessiveProperNoun = sIsBack(data);
                 /* Exit the current loop. */
                 break;
             }
@@ -79,7 +81,7 @@ int main(int argc, char **argv){
         /* Looping DOB Section. */
         while(loop == true) {
             /* Get the DOB from the user. */
-            data = receiveDOB(data, properNoun);
+            data = receiveDOB(data, possessiveProperNoun);
 
             /* Read file content and exit the program if 'q' is entered. */
             if(data == "q") {
@@ -91,12 +93,14 @@ int main(int argc, char **argv){
                 return 0;
             }
 
-            /* Ensure the name input follows traditional naming conventions. */
+            /* Ensure the dob input follows the yyyy/mm/dd format. */
             bool dob = validateDOB(data);
 
             if(dob == true) {
                 /* Write inputted data into the file. */
                 outfile << "Date of Birth: " << data << endl;
+                /* Notify the user that their input has been accepted */
+                cout << "[+] '" << data << "' has been accepted." << endl;
                 /* Exit the current loop. */
                 break;
             }
@@ -110,7 +114,7 @@ int main(int argc, char **argv){
             }
             else {
                 /* Indicate to the user that their input was invalid. */
-                cout << "Date of birth was considered to be invalid." << endl;
+                cout << "[*] Date of birth was considered to be invalid." << endl;
                 /* Loop the DOB prompt. */
                 loop = true;
             }
@@ -119,7 +123,7 @@ int main(int argc, char **argv){
         /* Looping Phone Number Section. */
         while(loop == true) {
             /* Receive the phone number from the user. */
-            data = receivePhoneNumber(data);
+            data = receivePhoneNumber(data, possessiveProperNoun);
 
             /* Read file content and exit the program if 'q' is entered. */
             if(data == "q") {
@@ -130,12 +134,14 @@ int main(int argc, char **argv){
                 return 0;
             }
 
-            /* Ensure the name input follows traditional naming conventions. */
+            /* Ensure the phone number input follows the UK phono. format. */
             bool phone = validatePhoneNumber(data);
 
             if(phone == true) {
                 /* Write inputted data into the file. */
                 outfile << "Phone Number: " << data << endl;
+                /* Notify the user that their input has been accepted */
+                cout << "[+] '" << data << "' has been accepted." << endl;
                 /* Exit the current loop. */
                 break;
             }
@@ -149,7 +155,7 @@ int main(int argc, char **argv){
             }
             else {
                 /* Indicate to the user that the phone number entered is invalid. */
-                cout << "Phone number was considered to be invalid." <<  endl;
+                cout << "[*] Phone number was considered to be invalid." <<  endl;
                 /* Loop the phone number prompt back to the user. */
                 loop = true;
             }
@@ -158,7 +164,7 @@ int main(int argc, char **argv){
         /* Looping Postcode Section. */
         while(loop == true) {
             /* Receive the phone number from the user. */
-            data = receivePostcode(data);
+            data = receivePostcode(data, possessiveProperNoun);
 
             /* Read file content and exit the program if 'q' is entered. */
             if(data == "q") { 
@@ -168,12 +174,14 @@ int main(int argc, char **argv){
                 return 0;
             }
 
-            /* Ensure the name input follows traditional naming conventions. */
+            /* Ensure the postcode input follows the UK postcode format. */
             bool postcode = validatePostcode(data);
 
             if(postcode == true) {
                 /* Write inputted data into the file. */
                 outfile << "Postcode: " << data << endl;
+                /* Notify the user that their input has been accepted */
+                cout << "[+] '" << data << "' has been accepted." << endl;
                 /* Exit the nested loop. */
                 break;
             }
@@ -187,7 +195,7 @@ int main(int argc, char **argv){
             }
             else {
                 /* Indicate to the user that the postcode entered is invalid. */
-                cout << "UK Postcode was considered to be invalid." <<  endl;
+                cout << "[*] UK Postcode was considered to be invalid." <<  endl;
                 /* Loop the phone number prompt back to the user. */
                 loop = true;
             }
@@ -265,16 +273,8 @@ void terminate(string data, std::ofstream& outfile)
     infile.close();
 }
 
-int openFile(std::ofstream& outfile) {
+void startProgram() {
     
-    outfile.open("output.txt");
-    /* Set in a precaution if 'output.txt' fails to open. */
-    if(outfile.fail()) {
-        /* Display a message if 'output.txt' fails to open. */
-        cout << "Couldn't open the file!" << endl;
-        return 0;
-    }
-
     cout << "\nINSTRUCTIONS:" << endl;
     cout << "(1) Enter q to exit." << endl;
     cout << "(2) Enter a blank space to skip (does not apply to NAME prompts)." << endl;
@@ -282,8 +282,6 @@ int openFile(std::ofstream& outfile) {
     putchar('\n');
     /* Indicate to the user that they are now entering information that will transfer into 'output.txt'. */
     cout << "Writing to the file..." << endl;
-
-    return 1;
 }
 
 /* Construct a function that receives a validated name from user. */
@@ -370,10 +368,10 @@ bool validateDOB(string date) {
 }
 
 /* Construct a function that receives a validated phone number from user. */
-string receivePhoneNumber(string phone) {
+string receivePhoneNumber(string phone, string user) {
     putchar('\n');
     /* Allow the user to enter the phone number. */
-    cout << "Enter the phone number: ";
+    cout << "Enter " << user << " phone number: ";
     /* Receive phone number from the user. */
     getline(cin, phone);
             
@@ -397,13 +395,31 @@ bool validatePhoneNumber(string phone) {
     }
 }
 
+/* Create a function that capitalizes each letter of postcode input. */
+void capitalizePostcode(string &data) {
+    /* Implement a for loop to parse through each letter of the string. */
+    for(int i = 0; i < data.length(); i++) {
+        /* Capitalize every letter of the postcode. */
+        if(isalpha(data[i]) == true) {
+            data[i] = toupper(data[i]);
+            continue;
+        }
+        else {
+            continue;
+        }
+    }
+}
+
 /* Construct a function that receives a validated UK postcode from user. */
-string receivePostcode(string postcode) {
+string receivePostcode(string postcode, string user) {
     putchar('\n');
     /* Allow the user to enter the postcode. */
-    cout << "Enter the postcode: ";
+    cout << "Enter " <<  user << " postcode: ";
     /* Receive postcode from the user. */
     getline(cin, postcode);
+
+    /* Capitalize each letter of the postcode. */
+    capitalizePostcode(postcode);
             
     /* Return the postcode that was entered by the user. */
     return postcode;
