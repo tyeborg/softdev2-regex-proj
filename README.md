@@ -1,15 +1,22 @@
 # Software Development 2: Regex Project
 
-The main objective of this project is to write a program that accepts four pieces of information (that are specific from the user): `name`, `date of birth`, `phone number`, `postcode`. Furthermore, the program will tend to ask the users for input until `q` is entered in which all the information that was entered is transferred into a txt file called: `output.txt`.
+The objective of this project is to write a program that accepts four pieces of information (that are specific from the user): `name`, `date of birth`, `phone number`, `postcode`. Furthermore, the program will tend to ask the users for input until `q` is entered in which all the information that was entered is transferred into a txt file called: `output.txt`.
 
 <img width="1236" alt="Screen Shot 2022-08-26 at 2 09 42 AM" src="https://user-images.githubusercontent.com/96035297/186795391-9024e589-7aea-4ba9-bb0d-4d8980ba3e68.png">
 
-## Installation & Execution 
-1. Clone this repository: `git clone https://github.com/tyeborg/softdev2-regex-project.git`
-2. Open your terminal, and in the project directory prepare to compile `main.cpp`
-  * Mac OS: `g++ main.cpp -o main`
+## Installation 
+* Clone this repository: `git clone https://github.com/tyeborg/softdev2-regex-project.git`
+* Open your terminal, and in the project directory prepare to compile `main.cpp`
+  *  Mac OS: `g++ main.cpp -o main`
   * Windows: `cl main.cpp` followed with `/EHa` as this program attempts to catch an exception that’s raised by something other than a throw
-3. Run the program by entering the following: `./main`
+* Run the program by entering the following: `./main`
+
+## Program Functionality
+Throughout the process of entering input for the `date of birth`, `phone number`, or `postcode`, users will have the option to skip the providence of input for a given section and proceed to the next prompt. To enable the skip function, the user will have to enter a blank statement after the prompt. 
+
+In the output file, the result will be classified as `(not available)` for the section that was skipped.  This option is excluded for the `name` prompt because the name input distinguishes the upcoming prompt input/information by the name entered by the user.
+
+<img width="1236" alt="program-functionality-01" src="https://user-images.githubusercontent.com/96035297/187001913-ef8d5772-61f2-4ad9-a903-ee4980945bf7.png">
 
 Much of the data read by this program is not validated. That is, it is possible to enter data that is not in the correct format. You must extend the program so that only correctly entered data can be accepted into the store of employees.
 
