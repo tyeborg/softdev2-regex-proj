@@ -18,7 +18,7 @@ In the output file, the result will be classified as `(not available)` for the s
 
 <img width="1236" alt="program-functionality-01" src="https://user-images.githubusercontent.com/96035297/187001913-ef8d5772-61f2-4ad9-a903-ee4980945bf7.png">
 
-Much of the data read by this program is not validated. That is, it is possible to enter data that is not in the correct format. You must extend the program so that only correctly entered data can be accepted into the store of employees.
+The program will ensure that the information entered by the users will be in the correct format. If the information is not in the correct format, the program will re-prompt the user until their input is considered valid or if ‘q’ or a blank space is entered. 
 
 * The name must only contain letters and appropriate symbols.
   * For example, the following are acceptable:
@@ -65,4 +65,5 @@ Much of the data read by this program is not validated. That is, it is possible 
     * SSS5 9PU – has three letters at the start.
     * S154 9LP – has three numbers before the space.
     
-You can choose whichever method you like to ensure that the data structure will contain correct data, but your mark will depend on the approach you use. For example, regular expressions are considered a hard approach, input validation medium, and simply asking one at a time and looping is considered easy.
+<img width="1235" alt="program-functionality-02" src="https://user-images.githubusercontent.com/96035297/187002506-b8af9fbc-e7e8-4b9e-82ff-d2aeb4865d27.png">
+
