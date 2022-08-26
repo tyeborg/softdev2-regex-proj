@@ -2,7 +2,7 @@
 
 The main objective of this project is to write a program that accepts four pieces of information (that are specific from the user): `name`, `date of birth`, `phone number`, `postcode`. Furthermore, the program will tend to ask the users for input until `q` is entered in which all the information that was entered is transferred into a txt file called: `output.txt`.
 
-<img width="950" alt="image" src="https://user-images.githubusercontent.com/96035297/186793892-ac9b125d-9432-446c-a9ed-4a6639697f75.png">
+<img width="1236" alt="Screen Shot 2022-08-26 at 2 09 42 AM" src="https://user-images.githubusercontent.com/96035297/186795391-9024e589-7aea-4ba9-bb0d-4d8980ba3e68.png">
 
 ## Installation
 Clone this repository by `git clone`
