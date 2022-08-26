@@ -4,7 +4,7 @@ The objective of this project is to write a program that accepts four pieces of 
 
 <img width="1236" alt="Screen Shot 2022-08-26 at 2 09 42 AM" src="https://user-images.githubusercontent.com/96035297/186795391-9024e589-7aea-4ba9-bb0d-4d8980ba3e68.png">
 
-## Installation 
+## Installation & Execution
 * Clone this repository: `git clone https://github.com/tyeborg/softdev2-regex-project.git`
 * Open your terminal, and in the project directory prepare to compile `main.cpp`
   *  Mac OS: `g++ main.cpp -o main`
@@ -67,3 +67,4 @@ The program will ensure that the information entered by the users will be in the
     
 <img width="1235" alt="program-functionality-02" src="https://user-images.githubusercontent.com/96035297/187002506-b8af9fbc-e7e8-4b9e-82ff-d2aeb4865d27.png">
 
+## Languages & Tools
