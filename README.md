@@ -68,3 +68,8 @@ The program will ensure that the information entered by the users will be in the
 <img width="1235" alt="program-functionality-02" src="https://user-images.githubusercontent.com/96035297/187002506-b8af9fbc-e7e8-4b9e-82ff-d2aeb4865d27.png">
 
 ## Languages & Tools
+<p float="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=cpp,vscode" />
+  </a>
+</p>
