@@ -1,5 +1,12 @@
 # Software Development 2: Regex Project
 
+The main objective of this project is to write a program that accepts four pieces of information (that are specific from the user): `name`, `date of birth`, `phone number`, `postcode`. Furthermore, the program will tend to ask the users for input until `q` is entered in which all the information that was entered is transferred into a txt file called: `output.txt`.
+
+<img width="471" alt="image" src="https://user-images.githubusercontent.com/96035297/186793892-ac9b125d-9432-446c-a9ed-4a6639697f75.png">
+
+## Installation
+Clone this repository by `git clone`
+
 Much of the data read by this program is not validated. That is, it is possible to enter data that is not in the correct format. You must extend the program so that only correctly entered data can be accepted into the store of employees.
 
 * The name must only contain letters and appropriate symbols.
